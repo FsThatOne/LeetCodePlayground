@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:LeetCode.playground">
+      location = "group:/Users/wangzhengyi/FsThatOne/LeetCodePlayground/LeetCode_Easy.playground">
+   </FileRef>
+   <FileRef
+      location = "group:LeetCode_Normal.playground">
+   </FileRef>
+   <FileRef
+      location = "group:LeetCode_Hard.playground">
    </FileRef>
 </Workspace>
