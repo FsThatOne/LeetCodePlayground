@@ -49,22 +49,15 @@ func lengthOfLongestSubstring(_ s: String) -> Int {
     var i = 0
     var j = i
     var maxLength = 0
-    var charHash = Array<Character>()
+    var charHash = [Character: Int]()
     while j < s.count {
-        if charHash.contains(s[j]!) {
-            if let exist = charHash.firstIndex(of: s[j]!) {
-                maxLength = max(maxLength, charHash.count)
-                for _ in 0...exist {
-                    charHash.removeFirst()
-                }
-                i += exist + 1
-            }
-        } else {
-            charHash.append(s[j]!)
-            j += 1
+        if let exist = charHash[s[j]!] {
+            i = max(i, exist)
         }
+        maxLength = max(maxLength, j - i + 1)
+        charHash[s[j]!] = j + 1
+        j += 1
     }
-    maxLength = max(maxLength, charHash.count)
     return maxLength
 }
-lengthOfLongestSubstring("dvdf")
+lengthOfLongestSubstring("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~")
