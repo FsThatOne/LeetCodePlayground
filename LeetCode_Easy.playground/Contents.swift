@@ -18,12 +18,6 @@ func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
 }
 twoSum([3,2,4], 6)
 
-//MARK: - 3. 无重复字符的最长子串
-//给定一个字符串,找出不含有重复字符的最长子串的长度.
-func lengthOfLongestSubstring(_ s: String) -> Int {
-    return 0
-}
-
 //MARK: - 7. 反转整数
 //给定一个 32 位有符号整数,将整数中的数字进行反转.
 func reverse(_ x: Int) -> Int {

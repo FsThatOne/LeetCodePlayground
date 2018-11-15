@@ -39,3 +39,32 @@ func addTwoNumbers(_ node1: ListNode?, _ node2: ListNode?) -> ListNode? {
 let linkList1 = LinkListGenerate([8, 9, 9])
 let linkList2 = LinkListGenerate([2])
 addTwoNumbers(linkList1, linkList2)
+
+//MARK: - 3. 无重复字符的最长子串
+//给定一个字符串,找出不含有重复字符的最长子串的长度.
+func lengthOfLongestSubstring(_ s: String) -> Int {
+    guard s.count > 0 else {
+        return 0
+    }
+    var i = 0
+    var j = i
+    var maxLength = 0
+    var charHash = Array<Character>()
+    while j < s.count {
+        if charHash.contains(s[j]!) {
+            if let exist = charHash.firstIndex(of: s[j]!) {
+                maxLength = max(maxLength, charHash.count)
+                for _ in 0...exist {
+                    charHash.removeFirst()
+                }
+                i += exist + 1
+            }
+        } else {
+            charHash.append(s[j]!)
+            j += 1
+        }
+    }
+    maxLength = max(maxLength, charHash.count)
+    return maxLength
+}
+lengthOfLongestSubstring("dvdf")
