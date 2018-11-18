@@ -61,3 +61,43 @@ func lengthOfLongestSubstring(_ s: String) -> Int {
     return maxLength
 }
 lengthOfLongestSubstring("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~")
+
+//MARK: - 5. 最长回文子串
+//给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为1000。
+func longestPalindrome(_ s: String) -> String {
+    func checkIfPlalindrome(_ s: String) -> Bool {
+        guard s.count > 1 else {
+            return true
+        }
+        if s.first == s.last {
+            return checkIfPlalindrome(String(s.dropFirst().dropLast()))
+        } else {
+            return false
+        }
+    }
+    guard s.count > 0 else {
+        return ""
+    }
+    guard s.count > 2 else {
+        return checkIfPlalindrome(s) ? s : String(s.first!)
+    }
+    var i = 0
+    var hashMap = [Character: Int]()
+    var longestPalindrome = ""
+    while i < s.count {
+        if let char = s[i] {
+            if let index = hashMap[char] {
+                if let targetString = s.substingInRange(index...i) {
+                    if checkIfPlalindrome(targetString) {
+                        longestPalindrome = longestPalindrome.count > targetString.count ? longestPalindrome : targetString
+                    }
+                }
+            } else {
+                hashMap[char] = i
+            }
+            i += 1
+        }
+    }
+    return longestPalindrome.count > 0 ? longestPalindrome : String(s.first!)
+}
+longestPalindrome("babadada")
