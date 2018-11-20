@@ -398,9 +398,41 @@ func countAndSay(_ n: Int) -> String {
 }
 countAndSay(12)
 
+//TODO: - Todo.
 //MARK: - 53. 最大子序和
 //给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
 func maxSubArray(_ nums: [Int]) -> Int {
-    
+    var maxSum = 0
+    for i in 0 ..< nums.count {
+        if nums[i] < 0 {
+            continue
+        }
+        
+    }
     return 0
 }
+
+//MARK: - 58. 最后一个单词的长度
+//给定一个仅包含大小写字母和空格 ' ' 的字符串，返回其最后一个单词的长度。如果不存在最后一个单词，请返回 0 。
+func lengthOfLastWord(_ s: String) -> Int {
+    guard s.count > 0 else {
+        return 0
+    }
+    var hasFindWord = false
+    var length = 0
+    
+    for i in (0..<s.count).reversed() {
+        if s[i] == " " {
+            if hasFindWord {
+                break
+            } else {
+                continue                
+            }
+        } else {
+            hasFindWord = true
+            length += 1
+        }
+    }
+    return length
+}
+lengthOfLastWord("Hello World")
