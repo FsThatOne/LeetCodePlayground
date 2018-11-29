@@ -459,3 +459,35 @@ func plusOne(_ digits: [Int]) -> [Int] {
     return returnArray
 }
 plusOne([9, 9, 9, 9, 9])
+
+//MARK: - 88. 合并两个有序数组
+//给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。
+func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
+    guard nums2.count > 0 else {
+        return
+    }
+}
+
+//MARK: - 189. 旋转数组
+//给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
+func rotate(_ nums: inout [Int], _ k: Int) {
+    guard nums.count > 1 else {
+        return
+    }
+    let modK = k % nums.count
+    guard modK > 0 else {
+        return
+    }
+    if modK <= nums.count / 2 { //小于一半, 向右移动modK
+        for _ in 1...modK {
+            nums.insert(nums.popLast()!, at: 0)
+        }
+    } else { //大于一半, 向左移动count - modK
+        for _ in 1...nums.count - modK {
+            nums.append(nums.first!)
+            nums.removeFirst()
+        }
+    }
+}
+var rotateArray = [1, 3, -5, 7, -4, 2]
+rotate(&rotateArray, 8)
