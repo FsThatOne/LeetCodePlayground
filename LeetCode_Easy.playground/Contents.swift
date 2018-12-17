@@ -2,20 +2,23 @@ import Foundation
 import Darwin
 
 //MARK: - 1. 两数之和
-//给定一个整数数组和一个目标值,找出数组中和为目标值的两个数.你可以假设每个输入只对应一种答案,且同样的元素不能被重复利用.
+//给定一个整数数组和一个目标值,找出数组中和为目标值的两个数的下标.你可以假设每个输入只对应一种答案,且同样的元素不能被重复利用.
 func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
+    guard nums.count >= 2 else {
+        return []
+    }
+    var hashTable: [Int: Int] = [:]
+    
     for i in 0..<nums.count {
-        for j in 0..<nums.count {
-            if j == i {
-                continue
-            }
-            if nums[i] + nums[j] == target {
-                return [i, j]
-            }
+        let tempValue = target - nums[i]
+        if let tempIndex = hashTable[tempValue] {
+            return [tempIndex, i]
         }
+        hashTable[nums[i]] = i
     }
     return []
 }
+//Time: O(n)   Space: O(n)
 twoSum([3,2,4], 6)
 
 //MARK: - 7. 反转整数
@@ -32,6 +35,7 @@ func reverse(_ x: Int) -> Int {
     let rangeLimit = Int(-powf(2, 31))...Int(powf(2, 31)-1)
     return rangeLimit.contains(finalNum * belowZero) ? (finalNum * belowZero) : 0
 }
+//Time: O(n)    Space: O(1)
 reverse(3040)
 
 //MARK: - 9. 回文数
@@ -59,7 +63,7 @@ func isPalindrome(_ x: Int) -> Bool {
     }
     return x == reversed(x)
 }
-
+//Time: O(n)    Space: O(1)
 isPalindrome(12233221)
 
 //MARK: - 13. 罗马数字转整数
@@ -111,6 +115,7 @@ func romanToInt(_ s: String) -> Int {
     }
     return finalValue
 }
+//Time: O(n)    Space: O(1)
 romanToInt("MCMXCIV")
 
 //MARK: - 14. 最长公共前缀
@@ -148,6 +153,7 @@ func longestCommonPrefix(_ strs: [String]) -> String {
     }
     return commonPrefix
 }
+//Timer: O(n2)  Space: O(1)
 longestCommonPrefix(["acb","cba"])
 
 //MARK: - 20. 有效的括号
@@ -185,6 +191,7 @@ func isValid(_ s: String) -> Bool {
     }
     return charStack.count == 0
 }
+
 isValid("{}()[]({)}")
 
 //MARK: - 21. 合并两个有序链表
@@ -398,19 +405,24 @@ func countAndSay(_ n: Int) -> String {
 }
 countAndSay(12)
 
-//TODO: - Todo.
 //MARK: - 53. 最大子序和
 //给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
 func maxSubArray(_ nums: [Int]) -> Int {
-    var maxSum = 0
-    for i in 0 ..< nums.count {
-        if nums[i] < 0 {
-            continue
-        }
-        
+    guard nums.count > 0 else {
+        return 0
     }
-    return 0
+    guard nums.count > 1 else {
+        return nums[0]
+    }
+    var maxSum = nums[0]
+    var currentMax = nums[0]
+    for i in 1..<nums.count {
+        currentMax = currentMax > 0 ? currentMax + nums[i] : nums[i]
+        maxSum = max(currentMax, maxSum)
+    }
+    return maxSum
 }
+maxSubArray([-2,1,-3,4,-1,2,1,-5,4])
 
 //MARK: - 58. 最后一个单词的长度
 //给定一个仅包含大小写字母和空格 ' ' 的字符串，返回其最后一个单词的长度。如果不存在最后一个单词，请返回 0 。
