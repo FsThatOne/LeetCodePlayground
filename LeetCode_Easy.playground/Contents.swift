@@ -191,7 +191,7 @@ func isValid(_ s: String) -> Bool {
     }
     return charStack.count == 0
 }
-
+//Time: O(n)    Space: O(n)
 isValid("{}()[]({)}")
 
 //MARK: - 21. 合并两个有序链表
@@ -231,6 +231,7 @@ func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
     }
     return newListHead.next
 }
+//Time: O(n)    Space: O(1)
 mergeTwoLists(LinkListGenerate([1, 2, 5, 6]), LinkListGenerate([1, 3, 4, 7]))
 
 //MARK: - 26. 删除排序数组中的重复项
@@ -257,6 +258,7 @@ func removeDuplicates(_ nums: inout [Int]) -> Int {
     }
     return nums.count
 }
+//Time: O(n)    Space: O(1)
 var duplicateIntArray = [0,0,1,1,1,2,2,3,3,4]
 removeDuplicates(&duplicateIntArray)
 
@@ -278,6 +280,7 @@ func removeElement(_ nums: inout [Int], _ val: Int) -> Int {
     }
     return nums.count
 }
+//Time: O(n)    Space: O(1)
 var removeIntArray = [0,0,1,1,1,2,2,3,3,4]
 removeElement(&removeIntArray, 2)
 
@@ -309,6 +312,7 @@ func strStr(_ haystack: String, _ needle: String) -> Int {
     }
     return matchIndex
 }
+//Time: O(n)    Space: O(1)
 strStr("hello", "ll")
 strStr("aaaaa", "bba")
 
@@ -351,6 +355,7 @@ func searchInsert(_ nums: [Int], _ target: Int) -> Int {//二分法
         return searchInsert(Array(nums[(middle + 1)...nums.count - 1]), target) + middle + 1
     }
 }
+//Time: O(logN)    Space: O(1)
 searchInsert([1,3,5,6], 7)
 
 //MARK: - 38. 报数
@@ -403,6 +408,7 @@ func countAndSay(_ n: Int) -> String {
     }
     return str
 }
+//Time: O(n)    Space: O(1)
 countAndSay(12)
 
 //MARK: - 53. 最大子序和
@@ -422,6 +428,7 @@ func maxSubArray(_ nums: [Int]) -> Int {
     }
     return maxSum
 }
+//Time: O(n)    Space: O(1)
 maxSubArray([-2,1,-3,4,-1,2,1,-5,4])
 
 //MARK: - 58. 最后一个单词的长度
@@ -447,6 +454,7 @@ func lengthOfLastWord(_ s: String) -> Int {
     }
     return length
 }
+//Time: O(n)    Space: O(1)
 lengthOfLastWord("Hello World")
 
 //MARK: - 66. 加一
@@ -470,9 +478,10 @@ func plusOne(_ digits: [Int]) -> [Int] {
     }
     return returnArray
 }
+//Time: O(n)    Space: O(n)
 plusOne([9, 9, 9, 9, 9])
 
-//MARK: - 88. 合并两个有序数组
+//MARK: - 88. 合并两个有序数组 -TODO
 //给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。
 func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
     guard nums2.count > 0 else {
@@ -502,4 +511,5 @@ func rotate(_ nums: inout [Int], _ k: Int) {
     }
 }
 var rotateArray = [1, 3, -5, 7, -4, 2]
+//Time: O(n)    Space: O(1)
 rotate(&rotateArray, 8)

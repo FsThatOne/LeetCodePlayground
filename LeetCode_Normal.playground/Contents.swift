@@ -36,6 +36,7 @@ func addTwoNumbers(_ node1: ListNode?, _ node2: ListNode?) -> ListNode? {
         return node1
     }
 }
+//Time: O(n)    Space: O(1)
 let linkList1 = LinkListGenerate([8, 9, 9])
 let linkList2 = LinkListGenerate([2])
 addTwoNumbers(linkList1, linkList2)
@@ -60,6 +61,7 @@ func lengthOfLongestSubstring(_ s: String) -> Int {
     }
     return maxLength
 }
+//Time: O(n)    Space: O(n)
 lengthOfLongestSubstring("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~")
 
 //MARK: - 5. 最长回文子串
@@ -100,4 +102,5 @@ func longestPalindrome(_ s: String) -> String {
     }
     return longestPalindrome.count > 0 ? longestPalindrome : String(s.first!)
 }
+//Time: O(n2)   Space: O(n)
 longestPalindrome("babadada")
