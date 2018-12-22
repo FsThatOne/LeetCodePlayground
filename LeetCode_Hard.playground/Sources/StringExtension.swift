@@ -10,7 +10,7 @@ public extension String {
         return self[charIndex]
     }
     //获取子字符串
-    func substingInRange(_ r: Range<Int>) -> String? {
+    func subStringInRange(_ r: Range<Int>) -> String? {
         if r.lowerBound < 0 || r.upperBound > self.count {
             return nil
         }
@@ -18,7 +18,7 @@ public extension String {
         let endIndex   = self.index(self.startIndex, offsetBy:r.upperBound)
         return String(self[startIndex..<endIndex])
     }
-    func substingInRange(_ r: ClosedRange<Int>) -> String? {
+    func subStringInRange(_ r: ClosedRange<Int>) -> String? {
         if r.lowerBound < 0 || r.upperBound > self.count {
             return nil
         }
