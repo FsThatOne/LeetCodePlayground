@@ -538,3 +538,28 @@ func rotate(_ nums: inout [Int], _ k: Int) {
 var rotateArray = [1, 3, -5, 7, -4, 2]
 //Time: O(n)    Space: O(1)
 rotate(&rotateArray, 8)
+
+//MARK: - 206. 反转链表
+//反转一个单链表。
+func reverseList(_ head: ListNode?) -> ListNode? {
+    guard head != nil else {
+        return head
+    }
+    guard head!.next != nil else {
+        return head
+    }
+    var pre = head
+    var cur = head!.next
+    var next: ListNode?
+    pre?.next = nil
+    while cur != nil {
+        next = cur!.next
+        cur!.next = pre
+        pre = cur
+        cur = next
+    }
+    return pre
+}
+//Time: O(n)    Space: O(1)
+let listNode = LinkListGenerate([1, 3, 4, 8, 2, 5])
+reverseList(listNode)?.output()
