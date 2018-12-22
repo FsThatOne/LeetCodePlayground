@@ -489,6 +489,31 @@ func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
     }
 }
 
+//MARK: - 169. 求众数
+//给定一个大小为 n 的数组，找到其中的众数。众数是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。
+//你可以假设数组是非空的，并且给定的数组总是存在众数。
+func majorityElement(_ nums: [Int]) -> Int {
+    guard nums.count > 1 else {
+        return nums.first!
+    }
+    let sortedNums = nums.sorted(by: <)
+    var num: Int = nums.first!
+    var count = 0
+    for number in sortedNums {
+        if number == num {
+            count += 1
+            if count > nums.count / 2 {
+                return num
+            }
+        } else {
+            num = number
+            count = 1
+        }
+    }
+    return num
+}
+majorityElement([3,2,3])
+
 //MARK: - 189. 旋转数组
 //给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
 func rotate(_ nums: inout [Int], _ k: Int) {
