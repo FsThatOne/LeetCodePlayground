@@ -64,7 +64,7 @@ func lengthOfLongestSubstring(_ s: String) -> Int {
 //Time: O(n)    Space: O(n)
 lengthOfLongestSubstring("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~")
 
-//MARK: - 5. 最长回文子串
+//MARK: - 5. 最长回文子串 -TODO
 //给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为1000。
 func longestPalindrome(_ s: String) -> String {
     func checkIfPlalindrome(_ s: String) -> Bool {
@@ -133,3 +133,24 @@ func convert(_ s: String, _ numRows: Int) -> String {
 //Time: O(n)    Space: O(1)
 convert("PAYPALISHIRING", 3)
 convert("abcd", 3)
+
+//MARK: - 50. Pow(x, n)
+//计算x的n次幂
+func myPow(_ x: Double, _ n: Int) -> Double {
+    var x = x, n = n
+    var result = 1.0
+    if n < 0 {
+        x = 1 / x
+        n = -1 * n
+    }
+    while n != 0 {
+        if n % 2 == 1 {
+            result = result * x
+        }
+        x *= x
+        n = n / 2
+    }
+    return result
+}
+//Time: O(logN)    Space: O(1)
+myPow(2.0, 10)
