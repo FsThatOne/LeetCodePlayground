@@ -134,6 +134,35 @@ func convert(_ s: String, _ numRows: Int) -> String {
 convert("PAYPALISHIRING", 3)
 convert("abcd", 3)
 
+//MARK: - 24. 两两交换链表中的节点
+//给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
+//给定 1->2->3->4, 你应该返回 2->1->4->3.
+func swapPairs(_ head: ListNode?) -> ListNode? {
+    var head = head
+    guard head != nil else {
+        return nil
+    }
+    guard head?.next != nil else {
+        return head
+    }
+    var pre = ListNode(-1)
+    pre.next = head
+    var a = head!
+    var b = head!.next
+    head = b
+    while pre.next != nil, pre.next?.next != nil {
+        a = pre.next!
+        b = a.next
+        pre.next = b
+        a.next = b?.next
+        b?.next = a
+        pre = a
+    }
+    return head
+}
+//Time: O(n)    Space: O(1)
+swapPairs(LinkListGenerate([1, 2, 3, 4]))
+
 //MARK: - 50. Pow(x, n)
 //计算x的n次幂
 func myPow(_ x: Double, _ n: Int) -> Double {
