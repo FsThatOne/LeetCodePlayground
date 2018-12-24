@@ -89,6 +89,8 @@ func longestPalindrome(_ s: String) -> String {
                     if checkIfPlalindrome(targetString) {
                         if longestPalindrome.count <= targetString.count {
                             longestPalindrome = targetString
+                        } else {
+                            hashMap[char] = i
                         }
                     }
                 }
@@ -183,3 +185,25 @@ func myPow(_ x: Double, _ n: Int) -> Double {
 }
 //Time: O(logN)    Space: O(1)
 myPow(2.0, 10)
+
+//MARK: - 94. 二叉树的中序遍历
+//地柜太简单,用迭代实现:
+func inorderTraversal(_ root: TreeNode?) -> [Int] {
+    guard root != nil else {
+        return []
+    }
+    var resultList = [Int]()
+    var nodeStack = [TreeNode]()
+    var current: TreeNode? = root
+    while current != nil || !nodeStack.isEmpty {
+        if current != nil {
+            nodeStack.append(current!)
+            current = current!.left
+        } else {
+            current = nodeStack.popLast()
+            resultList.append(current!.val)
+            current = current!.right
+        }
+    }
+    return resultList
+}
