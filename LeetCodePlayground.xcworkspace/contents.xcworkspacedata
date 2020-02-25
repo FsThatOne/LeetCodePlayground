@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/wangzhengyi/FsThatOne/LeetCodePlayground/LeetCode_Easy.playground">
+      location = "group:LeetCode_Easy.playground">
    </FileRef>
    <FileRef
       location = "group:LeetCode_Normal.playground">

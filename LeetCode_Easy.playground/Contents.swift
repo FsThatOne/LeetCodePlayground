@@ -539,6 +539,34 @@ var rotateArray = [1, 3, -5, 7, -4, 2]
 //Time: O(n)    Space: O(1)
 rotate(&rotateArray, 8)
 
+//MARK: - 198. 打家劫舍
+/*你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
+ 给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。*/
+func rob(_ nums: [Int]) -> Int {
+    guard nums.count > 0 else {
+        return 0
+    }
+    guard nums.count > 1 else {
+        return nums[0]
+    }
+    var odd = 0
+    var even = nums[0]
+    var maxSum = 0
+    var i = 2
+    
+    while i < nums.count {
+        even += nums[i]
+        odd += nums[i - 1]
+        maxSum = max(odd, even)
+        i += 2
+    }
+    if i == nums.count {
+        odd += nums.last!
+        maxSum = max(odd, even)
+    }
+    return maxSum;
+}
+
 //MARK: - 206. 反转链表
 //反转一个单链表。
 func reverseList(_ head: ListNode?) -> ListNode? {

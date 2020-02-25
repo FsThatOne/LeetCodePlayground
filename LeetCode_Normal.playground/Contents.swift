@@ -187,7 +187,7 @@ func myPow(_ x: Double, _ n: Int) -> Double {
 myPow(2.0, 10)
 
 //MARK: - 94. 二叉树的中序遍历
-//地柜太简单,用迭代实现:
+//递归太简单,用迭代实现:
 func inorderTraversal(_ root: TreeNode?) -> [Int] {
     guard root != nil else {
         return []
@@ -207,3 +207,4 @@ func inorderTraversal(_ root: TreeNode?) -> [Int] {
     }
     return resultList
 }
+//Time: O(n)    Space: O(n)
