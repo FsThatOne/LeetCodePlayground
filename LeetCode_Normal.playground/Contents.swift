@@ -208,3 +208,41 @@ func inorderTraversal(_ root: TreeNode?) -> [Int] {
     return resultList
 }
 //Time: O(n)    Space: O(n)
+
+
+//MARK: - 729. 我的日程安排表 I
+/*
+ 实现一个 MyCalendar 类来存放你的日程安排。如果要添加的时间内没有其他安排，则可以存储这个新的日程安排。
+ MyCalendar 有一个 book(int start, int end)方法。它意味着在 start 到 end 时间内增加一个日程安排，注意，这里的时间是半开区间，即 [start, end), 实数 x 的范围为，  start <= x < end。
+ 当两个日程安排有一些时间上的交叉时（例如两个日程安排都在同一时间内），就会产生重复预订。
+ 每次调用 MyCalendar.book方法时，如果可以将日程安排成功添加到日历中而不会导致重复预订，返回 true。否则，返回 false 并且不要将该日程安排添加到日历中。 */
+class MyCalendar {
+
+    private var calendars: [(Int, Int)] = []
+    
+    init() {}
+    
+    private func isDate(_ date: (Int, Int), notInRange: (Int, Int)) -> Bool {
+        return (date.0 < notInRange.0 && date.1 <= notInRange.0) || (date.0 >= notInRange.1 && date.1 > notInRange.1)
+    }
+    
+    func book(_ start: Int, _ end: Int) -> Bool {
+        var canBook = true
+        guard end > start else { return false }
+        let date = (start, end)
+        _ = calendars.map { tuple in
+            if !isDate(date, notInRange: tuple) {
+                canBook = false
+            }
+        }
+        if canBook {
+            calendars.append(date)
+        }
+        return canBook
+    }
+}
+//Time: O(n)    Space: O(n)
+let calendar = MyCalendar()
+calendar.book(10, 20)
+calendar.book(30, 40)
+calendar.book(15, 35)

@@ -591,3 +591,49 @@ func reverseList(_ head: ListNode?) -> ListNode? {
 //Time: O(n)    Space: O(1)
 let listNode = LinkListGenerate([1, 3, 4, 8, 2, 5])
 reverseList(listNode)?.output()
+
+//MARK: - 225. 用队列实现栈
+/*使用队列实现栈的下列操作：
+
+push(x) -- 元素 x 入栈
+pop() -- 移除栈顶元素
+top() -- 获取栈顶元素
+empty() -- 返回栈是否为空
+注意:
+
+你只能使用队列的基本操作-- 也就是 push to back, peek/pop from front, size, 和 is empty 这些操作是合法的。
+你所使用的语言也许不支持队列。 你可以使用 list 或者 deque（双端队列）来模拟一个队列 , 只要是标准的队列操作即可。
+你可以假设所有操作都是有效的（例如, 对一个空的栈不会调用 pop 或者 top 操作）。*/
+
+//Time: O(1)    Space: O(1)
+let aStack = MyStack<Int>()
+aStack.push(8)
+aStack.push(5)
+aStack.pop()
+aStack.top()
+aStack.pop()
+aStack.empty()
+
+//MARK: - 1030. 距离顺序排列矩阵单元格
+/*
+给出 R 行 C 列的矩阵，其中的单元格的整数坐标为 (r, c)，满足 0 <= r < R 且 0 <= c < C。
+另外，我们在该矩阵中给出了一个坐标为 (r0, c0) 的单元格。
+返回矩阵中的所有单元格的坐标，并按到 (r0, c0) 的距离从最小到最大的顺序排，其中，两单元格(r1, c1) 和 (r2, c2) 之间的距离是曼哈顿距离，|r1 - r2| + |c1 - c2|。（你可以按任何满足此条件的顺序返回答案。）*/
+func allCellsDistOrder(_ R: Int, _ C: Int, _ r0: Int, _ c0: Int) -> [[Int]] {
+    guard r0 < R, c0 < C else { return [[Int]]() }
+    var tupleArray = [(Int, Int)]()
+    (0..<R).map { row in
+        (0..<C).map { column in
+            tupleArray.append((row, column))
+        }
+    }
+    tupleArray.sort { (tuple1, tuple2) -> Bool in
+        return (abs(tuple1.0 - r0) + abs(tuple1.1 - c0)) < (abs(tuple2.0 - r0) + abs(tuple2.1 - c0))
+    }
+    let distanceArray = tupleArray.map {
+        return [$0.0, $0.1]
+    }
+    return distanceArray
+}
+//Time: O(n)    Space: O(n)
+allCellsDistOrder(2, 3, 1, 2)
