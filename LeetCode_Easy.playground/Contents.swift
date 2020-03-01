@@ -481,6 +481,39 @@ func plusOne(_ digits: [Int]) -> [Int] {
 //Time: O(n)    Space: O(n)
 plusOne([9, 9, 9, 9, 9])
 
+//MARK: - 67. 二进制求和
+//给定两个二进制字符串，返回他们的和（用二进制表示）.输入为非空字符串且只包含数字 1 和 0
+func addBinary(_ a: String, _ b: String) -> String {
+    guard a.count > 0, b .count > 0 else { return "0" }
+    var aa = a
+    var bb = b
+    var mod = 0
+    var sum = ""
+    while aa.count > 0 || bb.count > 0 {
+        var temp = mod
+        if aa.count > 0 {
+            temp += (Int(String(aa.removeLast())) ?? 0)
+        }
+        if bb.count > 0 {
+            temp += (Int(String(bb.removeLast())) ?? 0)
+        }
+        if temp >= 2 {
+            mod = 1
+            sum = String(temp - 2) + sum
+        } else {
+            mod = 0
+            sum = String(temp) + sum
+        }
+    }
+    if mod > 0 {
+        sum = String(mod) + sum
+    }
+    return sum
+}
+//Time: O(n)    Space: O(1)
+addBinary("1001011", "101")
+addBinary("1111", "1111")
+
 //MARK: - 88. 合并两个有序数组 -TODO
 //给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。
 func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
