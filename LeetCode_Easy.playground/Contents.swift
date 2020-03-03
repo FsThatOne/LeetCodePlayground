@@ -651,7 +651,7 @@ aStack.empty()
 /*假设你有一个很长的花坛，一部分地块种植了花，另一部分却没有。可是，花卉不能种植在相邻的地块上，它们会争夺水源，两者都会死去。给定一个花坛（表示为一个数组包含0和1，其中0表示没种植花，1表示种植了花），和一个数 n 。能否在不打破种植规则的情况下种入 n 朵花？能则返回True，不能则返回False。*/
 func canPlaceFlowers(_ flowerbed: [Int], _ n: Int) -> Bool {
     guard flowerbed.count > 0 else { return n == 0 }
-    var fixedFlowers = [0] + flowerbed + [0]
+    let fixedFlowers = [0] + flowerbed + [0]
     var sum = 0
     var index = 1
     while index <= flowerbed.count {
@@ -700,3 +700,39 @@ func allCellsDistOrder(_ R: Int, _ C: Int, _ r0: Int, _ c0: Int) -> [[Int]] {
 }
 //Time: O(n)    Space: O(n)
 allCellsDistOrder(2, 3, 1, 2)
+
+//MARK: - 面试题 10.01. 合并排序的数组
+//给定两个排序后的数组 A 和 B，其中 A 的末端有足够的缓冲空间容纳 B。 编写一个方法，将 B 合并入 A 并排序。初始化 A 和 B 的元素数量分别为 m 和 n。
+func mergeTwoSortedList(_ A: inout [Int], _ m: Int, _ B: [Int], _ n: Int) {
+    guard n > 0 else { return }
+    guard m > 0 else {
+        A = B
+        return
+    }
+    var aPoint = 0
+    var bPoint = 0
+    var aTop = m
+    if B[bPoint] < A[aPoint] {
+        A.removeLast()
+        A.insert(B[bPoint], at: 0)
+        bPoint += 1
+    }
+    while aPoint < aTop, bPoint < n {
+        if A[aPoint] <= B[bPoint], B[bPoint] < A[aPoint + 1] {
+            A.removeLast()
+            A.insert(B[bPoint], at: aPoint + 1)
+            bPoint += 1
+            aPoint += 1
+            aTop += 1
+        } else {
+            aPoint += 1
+        }
+    }
+    if bPoint < n {
+        for i in bPoint..<n {
+            A[m + i] = B[i]
+        }
+    }
+}
+var a = [4, 0, 0, 0, 0, 0]
+mergeTwoSortedList(&a, 1, [1, 2, 3, 4, 5], 5)
