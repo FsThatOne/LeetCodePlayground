@@ -1,6 +1,27 @@
 import Foundation
 import Darwin
 
+
+//MARK: - 88. 合并两个有序数组 -TODO
+//给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。
+func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
+    guard nums2.count > 0 else {
+        return
+    }
+}
+
+//MARK: - 994. 腐烂的橘子 -TODO
+/*在给定的网格中，每个单元格可以有以下三个值之一：
+值 0 代表空单元格；
+值 1 代表新鲜橘子；
+值 2 代表腐烂的橘子。
+每分钟，任何与腐烂的橘子（在 4 个正方向上）相邻的新鲜橘子都会腐烂。
+返回直到单元格中没有新鲜橘子为止所必须经过的最小分钟数。如果不可能，返回 -1。
+链接：https://leetcode-cn.com/problems/rotting-oranges */
+func orangesRotting(_ grid: [[Int]]) -> Int {
+    return 0
+}
+
 //MARK: - 1. 两数之和
 //给定一个整数数组和一个目标值,找出数组中和为目标值的两个数的下标.你可以假设每个输入只对应一种答案,且同样的元素不能被重复利用.
 func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
@@ -514,13 +535,29 @@ func addBinary(_ a: String, _ b: String) -> String {
 addBinary("1001011", "101")
 addBinary("1111", "1111")
 
-//MARK: - 88. 合并两个有序数组 -TODO
-//给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。
-func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
-    guard nums2.count > 0 else {
-        return
+//MARK: - 121. 买卖股票的最佳时机
+/*给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
+如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。
+注意你不能在买入股票前卖出股票。
+链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock */
+func maxProfit(_ prices: [Int]) -> Int {
+    guard prices.count >= 2 else {
+        return 0
     }
+    var finalValue = 0
+    var minPrice = Int.max
+    for i in 0..<prices.count {
+        if prices[i] < minPrice {
+            minPrice = prices[i]
+        } else if finalValue < prices[i] - minPrice {
+            finalValue = prices[i] - minPrice
+        }
+    }
+    return finalValue
 }
+//Time: O(1)   Space: O(1)
+maxProfit([7,1,5,3,6,4])
+maxProfit([7,6,4,3,1])
 
 //MARK: - 169. 求众数
 //给定一个大小为 n 的数组，找到其中的众数。众数是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。
@@ -647,7 +684,7 @@ aStack.top()
 aStack.pop()
 aStack.empty()
 
-//MARK: - 605. 种花问题 -TODO
+//MARK: - 605. 种花问题
 /*假设你有一个很长的花坛，一部分地块种植了花，另一部分却没有。可是，花卉不能种植在相邻的地块上，它们会争夺水源，两者都会死去。给定一个花坛（表示为一个数组包含0和1，其中0表示没种植花，1表示种植了花），和一个数 n 。能否在不打破种植规则的情况下种入 n 朵花？能则返回True，不能则返回False。*/
 func canPlaceFlowers(_ flowerbed: [Int], _ n: Int) -> Bool {
     guard flowerbed.count > 0 else { return n == 0 }
@@ -676,6 +713,37 @@ func canPlaceFlowers(_ flowerbed: [Int], _ n: Int) -> Bool {
 }
 //Time: O(n)    Space: O(n)
 canPlaceFlowers([1,0,0,0,1], 1)
+
+//MARK: - 1103. 分糖果 II
+/*我们买了一些糖果 candies，打算把它们分给排好队的 n = num_people 个小朋友。
+给第一个小朋友 1 颗糖果，第二个小朋友 2 颗，依此类推，直到给最后一个小朋友 n 颗糖果。
+然后，我们再回到队伍的起点，给第一个小朋友 n + 1 颗糖果，第二个小朋友 n + 2 颗，依此类推，直到给最后一个小朋友 2 * n 颗糖果。
+重复上述过程（每次都比上一次多给出一颗糖果，当到达队伍终点后再次从队伍起点开始），直到我们分完所有的糖果。注意，就算我们手中的剩下糖果数不够（不比前一次发出的糖果多），这些糖果也会全部发给当前的小朋友。
+返回一个长度为 num_people、元素之和为 candies 的数组，以表示糖果的最终分发情况（即 ans[i] 表示第 i 个小朋友分到的糖果数）。
+链接：https://leetcode-cn.com/problems/distribute-candies-to-people */
+func distributeCandies(_ candies: Int, _ num_people: Int) -> [Int] {
+    var result = [Int](repeating: 0, count: num_people)
+    guard candies > 0 else { return result }
+    var shouldGive = 1
+    var restCandies = candies
+    while restCandies > 0 {
+        for i in 0..<num_people {
+            if restCandies >= shouldGive {
+                result[i] += shouldGive
+                restCandies -= shouldGive
+                shouldGive += 1
+            } else {
+                result[i] += restCandies
+                restCandies = 0
+                break
+            }
+        }
+    }
+    return result
+}
+distributeCandies(7, 4)
+distributeCandies(10, 3)
+distributeCandies(78, 4)
 
 //MARK: - 1030. 距离顺序排列矩阵单元格
 /*
@@ -735,4 +803,36 @@ func mergeTwoSortedList(_ A: inout [Int], _ m: Int, _ B: [Int], _ n: Int) {
     }
 }
 var a = [4, 0, 0, 0, 0, 0]
+//Time: O(n)   Space: O(1)
 mergeTwoSortedList(&a, 1, [1, 2, 3, 4, 5], 5)
+
+//MARKL: - 面试题57 - II. 和为s的连续正数序列
+/*输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
+序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
+链接：https://leetcode-cn.com/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。*/
+func findContinuousSequence(_ target: Int) -> [[Int]] {
+    guard target > 1 else { return [] }
+    var result = [[Int]]()
+    var leftP = 1
+    var rightP = 2
+    func sum(from: Int, to: Int) -> Int {
+        guard from < to else { return to }
+        return (from + to) * (to - from + 1) / 2
+    }
+    while rightP < target, leftP < rightP {
+        let sumTemp = sum(from: leftP, to: rightP)
+        if sumTemp == target {
+            result.append(Array(leftP...rightP))
+            leftP += 1
+        } else if sumTemp > target {
+            leftP += 1
+        } else {
+            rightP += 1
+        }
+    }
+    return result
+}
+//Time: O(n)   Space: O(1)
+findContinuousSequence(9)
+findContinuousSequence(15)

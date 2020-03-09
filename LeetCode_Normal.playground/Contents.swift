@@ -1,6 +1,7 @@
 import Foundation
 import Darwin
 
+
 //MARK: - 2. 两数相加
 //给定两个非空链表来表示两个非负整数.位数按照逆序方式存储,它们的每个节点只存储单个数字.将两数相加返回一个新的链表.你可以假设除了数字 0 之外,这两个数字都不会以零开头.
 func addTwoNumbers(_ node1: ListNode?, _ node2: ListNode?) -> ListNode? {
@@ -209,6 +210,22 @@ func inorderTraversal(_ root: TreeNode?) -> [Int] {
 }
 //Time: O(n)    Space: O(n)
 
+//MARK: - 322. 零钱兑换
+/*给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。
+链接：https://leetcode-cn.com/problems/coin-change */
+func coinChange(_ coins: [Int], _ amount: Int) -> Int {
+    if coins.isEmpty { return -1 }
+    var dp = Array(repeating: amount + 1, count: amount + 1)
+    dp[0] = 0
+    for coin in coins {
+        var i = coin
+        while i <= amount {
+            dp[i] = min(dp[i], dp[i - coin] + 1)
+            i += 1
+        }
+    }
+    return dp[amount] >= amount + 1 ? -1 : dp[amount]
+}
 
 //MARK: - 729. 我的日程安排表 I
 /*
@@ -246,3 +263,45 @@ let calendar = MyCalendar()
 calendar.book(10, 20)
 calendar.book(30, 40)
 calendar.book(15, 35)
+
+
+//MARK: - 面试题59 - II. 队列的最大值
+/*请定义一个队列并实现函数 max_value 得到队列里的最大值，要求函数max_value、push_back 和 pop_front 的时间复杂度都是O(1)。
+若队列为空，pop_front 和 max_value 需要返回 -1
+链接：https://leetcode-cn.com/problems/dui-lie-de-zui-da-zhi-lcof */
+class MaxQueue {
+
+    private var queue = [Int]()
+    private var deque = [Int]()
+    
+    init() {}
+    
+    func max_value() -> Int {
+        return deque.first ?? -1
+    }
+    
+    func push_back(_ value: Int) {
+        while deque.count >= 0 {
+            if deque.last == nil || deque.last! > value {
+                deque.append(value)
+                break
+            } else {
+                deque.removeLast()
+            }
+        }
+        queue.append(value)
+    }
+    
+    func pop_front() -> Int {
+        guard queue.count > 0 else { return -1 }
+        let first = queue.removeFirst()
+        if first == deque.first {
+            deque.removeFirst()
+        }
+        return first
+    }
+}
+//Time: O(1)    Space: O(n)
+/*PS:  max_value：O(1)，直接返回双端队列（或数组）头部的元素。
+         pop_front ：O(1)，从队列中弹出一个元素，仍然是常数时间复杂度。
+         push_back：O(1)，例如 543216，只有最后一次 push_back 操作是 O(n)，其他每次操作的时间复杂度都是 O(1)，均摊时间复杂度为(O(1) × (n−1) + O(n)) / n=O(1)。*/
