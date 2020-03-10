@@ -1,6 +1,22 @@
 import Foundation
 import Darwin
 
+//MARK: - 543. 二叉树的直径
+/*给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。这条路径可能穿过根结点。*/
+func diameterOfBinaryTree(_ root: TreeNode?) -> Int {
+    guard root != nil else { return 0 }
+    var result = 1
+    func findDepth(root: TreeNode?) -> Int {
+        guard root != nil else { return 0 }
+        let left = findDepth(root: root!.left)
+        let right = findDepth(root: root!.right)
+        result = max(result, left + right)
+        return max(left, right) + 1
+    }
+    findDepth(root: root)
+    return result
+}
+//Time: O(n)   Space: O(Height)
 
 //MARK: - 88. 合并两个有序数组 -TODO
 //给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。
