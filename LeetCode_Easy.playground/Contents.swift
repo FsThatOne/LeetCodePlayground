@@ -1,22 +1,6 @@
 import Foundation
 import Darwin
 
-//MARK: - 543. 二叉树的直径
-/*给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。这条路径可能穿过根结点。*/
-func diameterOfBinaryTree(_ root: TreeNode?) -> Int {
-    guard root != nil else { return 0 }
-    var result = 1
-    func findDepth(root: TreeNode?) -> Int {
-        guard root != nil else { return 0 }
-        let left = findDepth(root: root!.left)
-        let right = findDepth(root: root!.right)
-        result = max(result, left + right)
-        return max(left, right) + 1
-    }
-    findDepth(root: root)
-    return result
-}
-//Time: O(n)   Space: O(Height)
 
 //MARK: - 88. 合并两个有序数组 -TODO
 //给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。
@@ -700,6 +684,23 @@ aStack.top()
 aStack.pop()
 aStack.empty()
 
+//MARK: - 543. 二叉树的直径
+/*给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。这条路径可能穿过根结点。*/
+func diameterOfBinaryTree(_ root: TreeNode?) -> Int {
+    guard root != nil else { return 0 }
+    var result = 1
+    func findDepth(root: TreeNode?) -> Int {
+        guard root != nil else { return 0 }
+        let left = findDepth(root: root!.left)
+        let right = findDepth(root: root!.right)
+        result = max(result, left + right)
+        return max(left, right) + 1
+    }
+    findDepth(root: root)
+    return result
+}
+//Time: O(n)   Space: O(Height)
+
 //MARK: - 605. 种花问题
 /*假设你有一个很长的花坛，一部分地块种植了花，另一部分却没有。可是，花卉不能种植在相邻的地块上，它们会争夺水源，两者都会死去。给定一个花坛（表示为一个数组包含0和1，其中0表示没种植花，1表示种植了花），和一个数 n 。能否在不打破种植规则的情况下种入 n 朵花？能则返回True，不能则返回False。*/
 func canPlaceFlowers(_ flowerbed: [Int], _ n: Int) -> Bool {
@@ -760,6 +761,33 @@ func distributeCandies(_ candies: Int, _ num_people: Int) -> [Int] {
 distributeCandies(7, 4)
 distributeCandies(10, 3)
 distributeCandies(78, 4)
+
+//MARK: - 1013. 将数组分成和相等的三个部分
+/*给你一个整数数组 A，只有可以将其划分为三个和相等的非空部分时才返回 true，否则返回 false。
+形式上，如果可以找出索引 i+1 < j 且满足 (A[0] + A[1] + ... + A[i] == A[i+1] + A[i+2] + ... + A[j-1] == A[j] + A[j-1] + ... + A[A.length - 1]) 就可以将数组三等分。
+链接：https://leetcode-cn.com/problems/partition-array-into-three-parts-with-equal-sum */
+func canThreePartsEqualSum(_ A: [Int]) -> Bool {
+    guard A.count >= 3 else { return false }
+    let sum = A.reduce(0, +)
+    guard sum % 3 == 0 else { return false }
+    let avg = sum / 3
+    var tempSum = 0
+    var count = 0
+    for i in 0..<A.count {
+        if tempSum + A[i] == avg {
+            tempSum = 0
+            count += 1
+        } else {
+            tempSum += A[i]
+        }
+    }
+    guard tempSum == 0, count >= 3 else { return false }
+    return true
+}
+//Time: O(n)   Space: O(1)
+canThreePartsEqualSum([3,3,6,5,-2,2,5,1,-9,4])
+canThreePartsEqualSum([1,-1,1,-1])
+canThreePartsEqualSum([10,-10,10,-10,10,-10,10,-10])
 
 //MARK: - 1030. 距离顺序排列矩阵单元格
 /*
