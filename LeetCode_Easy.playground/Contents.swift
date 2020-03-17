@@ -813,6 +813,63 @@ func allCellsDistOrder(_ R: Int, _ C: Int, _ r0: Int, _ c0: Int) -> [[Int]] {
 //Time: O(n)    Space: O(n)
 allCellsDistOrder(2, 3, 1, 2)
 
+//MARK: - 1071. 字符串的最大公因子
+/*对于字符串 S 和 T，只有在 S = T + ... + T（T 与自身连接 1 次或多次）时，我们才认定 “T 能除尽 S”。
+返回最长字符串 X，要求满足 X 能除尽 str1 且 X 能除尽 str2。
+链接：https://leetcode-cn.com/problems/greatest-common-divisor-of-strings */
+func gcdOfStrings(_ str1: String, _ str2: String) -> String {
+    guard str1 + str2 == str2 + str1 else { return "" }
+    func gcd(_ left: Int, _ right: Int) -> Int {
+        guard left != right else { return left }
+        if left > right {
+            return gcd(left - right, right)
+        } else {
+            return gcd(right - left, left)
+        }
+    }
+    let gcdResult = gcd(str1.count, str2.count)
+    return String(str1.prefix(gcdResult))
+}
+//Time: O(n)    Space: O(1)
+gcdOfStrings("ABCABC", "ABC")
+
+//MARK: - 1160. 拼写单词
+/*
+ 给你一份『词汇表』（字符串数组） words 和一张『字母表』（字符串） chars。
+ 假如你可以用 chars 中的『字母』（字符）拼写出 words 中的某个『单词』（字符串），那么我们就认为你掌握了这个单词。
+ 注意：每次拼写时，chars 中的每个字母都只能用一次。
+ 返回词汇表 words 中你掌握的所有单词的 长度之和。
+ 链接：https://leetcode-cn.com/problems/find-words-that-can-be-formed-by-characters
+ */
+func countCharacters(_ words: [String], _ chars: String) -> Int {
+    guard !words.isEmpty, !chars.isEmpty else { return 0 }
+    var hash = [String: Int]()
+    var sum = 0
+    chars.map {
+        hash[String($0)] = hash[String($0)] == nil ? 1 : hash[String($0)]! + 1
+    }
+    let staticHash = hash
+    words.map {
+        var hashTemp = staticHash
+        var canCover = true
+        for i in 0..<$0.count {
+            if let key = String($0)[i], let count = hashTemp[String(key)], count > 0 {
+                hashTemp[String(key)] = count - 1
+            } else {
+                canCover = false
+                break
+            }
+        }
+        if canCover {
+            sum += $0.count
+        }
+    }
+    return sum
+}
+//Time: O(n)    Space: O(n)
+countCharacters(["cat","bt","hat","tree"], "atach")
+countCharacters(["hello","world","leetcode"], "welldonehoneyr")
+
 //MARK: - 面试题 10.01. 合并排序的数组
 //给定两个排序后的数组 A 和 B，其中 A 的末端有足够的缓冲空间容纳 B。 编写一个方法，将 B 合并入 A 并排序。初始化 A 和 B 的元素数量分别为 m 和 n。
 func mergeTwoSortedList(_ A: inout [Int], _ m: Int, _ B: [Int], _ n: Int) {
