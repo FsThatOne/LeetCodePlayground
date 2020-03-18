@@ -731,6 +731,24 @@ func canPlaceFlowers(_ flowerbed: [Int], _ n: Int) -> Bool {
 //Time: O(n)    Space: O(n)
 canPlaceFlowers([1,0,0,0,1], 1)
 
+//MARK: - 836. 矩形重叠
+/* 矩形以列表 [x1, y1, x2, y2] 的形式表示，其中 (x1, y1) 为左下角的坐标，(x2, y2) 是右上角的坐标。
+如果相交的面积为正，则称两矩形重叠。需要明确的是，只在角或边接触的两个矩形不构成重叠。
+给出两个矩形，判断它们是否重叠并返回结果。*/
+func isRectangleOverlap(_ rec1: [Int], _ rec2: [Int]) -> Bool {
+    let r1x = rec1[0]..<rec1[2]
+    let r1y = rec1[1]..<rec1[3]
+    let r2x = rec2[0]..<rec2[2]
+    let r2y = rec2[1]..<rec2[3]
+    func hasCommonPart(_ left: Range<Int>, _ right: Range<Int>) -> Bool {
+        return left.clamped(to: right).count > 0
+    }
+    return hasCommonPart(r1x, r2x) && hasCommonPart(r1y, r2y)
+}
+//Time: O(1)    Space: O(1)
+isRectangleOverlap([0,0,1,1], [1,0,2,1])
+isRectangleOverlap([0,0,2,2], [1,1,3,3])
+
 //MARK: - 1103. 分糖果 II
 /*我们买了一些糖果 candies，打算把它们分给排好队的 n = num_people 个小朋友。
 给第一个小朋友 1 颗糖果，第二个小朋友 2 颗，依此类推，直到给最后一个小朋友 n 颗糖果。
