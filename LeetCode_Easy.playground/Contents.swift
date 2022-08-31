@@ -225,7 +225,7 @@ func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
     }
     var firstListPoint: ListNode? = l1
     var secondListPoint: ListNode? = l2
-    var newListHead: ListNode = ListNode(0)
+    let newListHead: ListNode = ListNode(0)
     var newListPoint = newListHead
     
     func compareList(_ left: inout ListNode?, _ right: inout ListNode?) {
@@ -534,6 +534,49 @@ func addBinary(_ a: String, _ b: String) -> String {
 //Time: O(n)    Space: O(1)
 addBinary("1001011", "101")
 addBinary("1111", "1111")
+
+//MARK: - 69. x 的平方根
+/*给你一个非负整数 x ，计算并返回 x 的 算术平方根 。
+ 由于返回类型是整数，结果只保留 整数部分 ，小数部分将被 舍去 。
+ 注意：不允许使用任何内置指数函数和算符，例如 pow(x, 0.5) 或者 x ** 0.5 。
+链接：https://leetcode.cn/problems/sqrtx/ */
+func mySqrt(_ x: Int) -> Int {
+    if (1...3).contains(x) {
+        return 1
+    }
+    var temp = x / 2
+    var top = x
+    while temp <= top {
+        if temp * temp == x {
+            return temp
+        } else if temp * temp > x {
+            top = temp
+            temp /= 2
+        } else {
+            if (temp + 1) * (temp + 1) > x {
+                return temp
+            }
+            temp += 1
+        }
+    }
+    return 1
+}
+
+//MARK: - 70. 爬楼梯
+/*假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
+ 
+ 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
+链接：https://leetcode.cn/problems/climbing-stairs/ */
+func climbStairs(_ n: Int) -> Int {
+    var low = 0, medium = 0
+    var now = 1
+    for _ in 0...n {
+        low = medium
+        medium = now
+        now = low + medium
+    }
+    return now
+}
 
 //MARK: - 121. 买卖股票的最佳时机
 /*给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
